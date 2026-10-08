@@ -1,23 +1,35 @@
+import { cities } from "./types";
 import { fetchWeather } from "./api";
 
 declare const process: {
   argv: string[];
+  exit: (code?: number) => never;
 };
 
 async function main() {
-
   const cityName = process.argv[2];
 
   if (!cityName) {
-    console.log("Usage: bun run src/index.ts <city>");
+    console.log(
+      "Usage: bun run src/index.ts <city>"
+    );
 
-    return;
+    process.exit(1);
+  }
+
+  const city =
+    cities[cityName as keyof typeof cities];
+
+  if (!city) {
+    console.log("Unsupported city.");
+    process.exit(1);
   }
 
   try {
-    const latitude = Number(cityName);
-    const longitude = Number(process.argv[3] ?? "0");
-    const weather = await fetchWeather(latitude, longitude);
+    const weather = await fetchWeather(
+      city.latitude,
+      city.longitude
+    );
 
     console.log(`📍 ${cityName}`);
     console.log();
