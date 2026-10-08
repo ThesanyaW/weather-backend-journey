@@ -3,12 +3,10 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
-
   "scripts": {
     "dev": "bun run src/index.ts",
     "start": "bun run src/index.ts"
   },
-  
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^26.6.4"
@@ -17,6 +15,7 @@
     "typescript": "^7"
   },
   "dependencies": {
+    "tsx": "^4.23.15",
     "zod": "^4.6.5"
   }
 }
