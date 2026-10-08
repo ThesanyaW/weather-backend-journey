@@ -15,7 +15,9 @@ async function main() {
   }
 
   try {
-    const weather = await fetchWeather();
+    const latitude = Number(cityName);
+    const longitude = Number(process.argv[3] ?? "0");
+    const weather = await fetchWeather(latitude, longitude);
 
     console.log(`📍 ${cityName}`);
     console.log();

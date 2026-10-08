@@ -1,9 +1,9 @@
 import { WeatherSchema } from "./schema";
 
-const LATITUDE = 6.9271;
-const LONGITUDE = 79.8612;
-
-export async function fetchWeather() {
+export async function fetchWeather(
+  LATITUDE: number,
+  LONGITUDE: number
+) {
   const url =
     `https://api.open-meteo.com/v1/forecast` +
     `?latitude=${LATITUDE}` +
