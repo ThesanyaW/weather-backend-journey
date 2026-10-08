@@ -1,10 +1,23 @@
 import { fetchWeather } from "./api";
 
+declare const process: {
+  argv: string[];
+};
+
 async function main() {
+
+  const cityName = process.argv[2];
+
+  if (!cityName) {
+    console.log("Usage: bun run src/index.ts <city>");
+
+    return;
+  }
+
   try {
     const weather = await fetchWeather();
 
-    console.log("📍 Colombo");
+    console.log(`📍 ${cityName}`);
     console.log();
 
     console.log(
