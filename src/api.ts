@@ -18,5 +18,15 @@ export async function fetchWeather(
 
   const json = await response.json();
 
-  return WeatherSchema.parse(json);
+  const result =
+  WeatherSchema.safeParse(json);
+
+  if (!result.success) {
+ throw new Error(
+  result.error.message
+);
+}
+
+return result.data;
+
 }
