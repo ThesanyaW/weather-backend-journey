@@ -6,12 +6,41 @@ declare const process: {
   exit: (code?: number) => never;
 };
 
+async function showAllCities() {
+  const [colombo, kandy, galle] =
+    await Promise.all([
+      fetchWeather(6.9271, 79.8612),
+      fetchWeather(7.2906, 80.6337),
+      fetchWeather(6.0328, 80.2168),
+    ]);
+
+  console.log("\n📍 Colombo");
+  console.log(
+    `🌡 Temperature: ${colombo.current.temperature_2m}°C`
+  );
+
+  console.log("\n📍 Kandy");
+  console.log(
+    `🌡 Temperature: ${kandy.current.temperature_2m}°C`
+  );
+
+  console.log("\n📍 Galle");
+  console.log(
+    `🌡 Temperature: ${galle.current.temperature_2m}°C`
+  );
+}
+
 async function main() {
   const cityName = process.argv[2];
 
+  if (cityName === "--all") {
+  await showAllCities();
+  return;
+}
+
   if (!cityName) {
     console.log(
-      "Usage: bun run src/index.ts <city>"
+      "Usage: bun run src/index.ts <city> | --all"
     );
 
     process.exit(1);
