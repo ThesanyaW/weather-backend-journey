@@ -9,23 +9,41 @@ app.get("/", (c) => {
 });
 
 app.get("/weather/:city", async (c) => {
-  const city = c.req.param("city");
+  try {
+    const city = c.req.param("city");
 
-  const cityData =
-    cities[city as keyof typeof cities];
+    const cityData =
+      cities[city as keyof typeof cities];
 
-  const weather = await fetchWeather(
-    cityData.latitude,
-    cityData.longitude
-  );
+    if (!cityData) {
+      return c.json(
+        { error: "Unsupported city" },
+        404
+      );
+    }
 
-  return c.json({
-    city,
-    temperature:
-      weather.current.temperature_2m,
-    windSpeed:
-      weather.current.wind_speed_10m,
-  });
+    const weather = await fetchWeather(
+      cityData.latitude,
+      cityData.longitude
+    );
+
+    return c.json({
+      city,
+      temperature:
+        weather.current.temperature_2m,
+      windSpeed:
+        weather.current.wind_speed_10m,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return c.json(
+      {
+        error: "Internal server error",
+      },
+      500
+    );
+  }
 });
 
 export default app;
