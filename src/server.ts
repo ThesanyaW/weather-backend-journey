@@ -1,8 +1,11 @@
 import { Hono } from "hono";
+import { logger } from "hono/logger";
 import { cities } from "./types";
 import { fetchWeather } from "./api";
 
 const app = new Hono();
+
+app.use("*", logger());
 
 app.get("/", (c) => {
   return c.text("Weather API");
