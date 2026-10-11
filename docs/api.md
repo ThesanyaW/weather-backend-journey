@@ -52,14 +52,56 @@ GET /weather/Colombo
 }
 ```
 
+---
+
+## GET /cities
+
+Returns all supported cities.
+
+### Example Request
+
+```http
+GET /cities
+```
+
+### Response
+
+```json
+["Colombo", "Kandy", "Galle"]
+```
+
+### Status Codes
+
+- 200 OK
+
+---
+
+## GET /health
+
+Returns the health status of the API.
+
+### Example Request
+
+```http
+GET /health
+```
+
+### Response
+
+```json
+{
+  "status": "healthy"
+}
+```
+
+### Status Codes
+
+- 200 OK
+
+---
+
 ### Status Codes
 
 - 200 OK
 - 404 Not Found
 - 500 Internal Server Error
-
-### Supported Cities
-
-- Colombo
-- Kandy
-- Galle

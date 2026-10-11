@@ -57,4 +57,14 @@ app.get("/weather/:city", async (c) => {
   }
 });
 
+app.get("/cities", (c) => {
+  return c.json(Object.keys(cities));
+});
+
+app.get("/health", (c) => {
+  return c.json({
+    status: "healthy",
+  });
+});
+
 export default app;
