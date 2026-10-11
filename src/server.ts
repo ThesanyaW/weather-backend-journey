@@ -3,6 +3,14 @@ import { logger } from "hono/logger";
 import { cities } from "./types";
 import { fetchWeather } from "./api";
 
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
+const port = process.env.PORT ?? "3000";
+
+console.log(`Server configured to run on port ${port}`);
+
 const app = new Hono();
 
 app.use("*", logger());
