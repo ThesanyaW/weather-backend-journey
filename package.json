@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "bun run src/index.ts",
-    "start": "bun run src/index.ts"
+    "start": "bun run src/index.ts",
+    "fastify": "bun run src/fastify-index.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
