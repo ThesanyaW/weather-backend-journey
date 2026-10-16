@@ -1,18 +1,43 @@
+import { FastifyInstance } from "fastify";
 import {
   createFavorite,
   getFavorites,
 } from "../services/favorites.service.js";
+import {
+  FavoritesResponseSchema,
+  FavoriteResponseSchema,
+  CreateFavoriteSchema,
+} from "../schemas/favorite.schema.js";
 
 export default async function (
-  app: any
+  app: FastifyInstance
 ) {
-  app.get("/", async () => {
+  app.get(
+  "/",
+  {
+    schema: {
+      response: {
+        200: FavoritesResponseSchema,
+      },
+    },
+  },
+  async () => {
     return getFavorites();
-  });
+  }
+);
 
-  app.post("/", async (request: any) => {
-    return createFavorite(
-      request.body as any
-    );
-  });
+  app.post(
+  "/",
+  {
+    schema: {
+      body: CreateFavoriteSchema,
+      response: {
+        200: FavoriteResponseSchema,
+      },
+    },
+  },
+  async (request: { body: unknown }) => {
+    return createFavorite(request.body as any);
+  }
+);
 }
