@@ -10,6 +10,7 @@ import {
   FavoritesResponseSchema,
   FavoriteResponseSchema,
   CreateFavoriteSchema,
+  FavoriteParamsSchema,
 } from "../schemas/favorite.schema.js";
 
 export default async function (
@@ -51,24 +52,43 @@ export default async function (
   }
 );
 
-app.get("/:id", async (request: any, reply) => {
-  const favorite = getFavoriteById(
-    request.params.id
-  );
+app.get(
+  "/:id",
+  {
+    schema: {
+      params: FavoriteParamsSchema,
+      response: {
+        200: FavoriteResponseSchema,
+        404: {
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+          required: ["message"],
+        },
+      },
+    },
+  },
+  async (request: any, reply) => {
+    const favorite = getFavoriteById(
+      request.params.id
+    );
 
-  if (!favorite) {
-    return reply.code(404).send({
-      message: "Favorite not found",
-    });
+    if (!favorite) {
+      return reply.code(404).send({
+        message: "Favorite not found",
+      });
+    }
+
+    return favorite;
   }
-
-  return favorite;
-});
+);
 
 app.put(
   "/:id",
   {
     schema: {
+      params: FavoriteParamsSchema,
       body: CreateFavoriteSchema,
       response: {
         200: FavoriteResponseSchema,
@@ -102,31 +122,23 @@ app.delete(
   "/:id",
   {
     schema: {
-      response: {
-        404: {
-          type: "object",
-          properties: {
-            message: { type: "string" },
-          },
-          required: ["message"],
-        },
-      },
+      params: FavoriteParamsSchema,
     },
   },
   async (request: any, reply) => {
-  const deleted = deleteFavorite(
-    request.params.id
-  );
+    const deleted = deleteFavorite(
+      request.params.id
+    );
 
-  if (!deleted) {
-    return reply.code(404).send({
-      message: "Favorite not found",
-    });
-  }
+    if (!deleted) {
+      return reply.code(404).send({
+        message: "Favorite not found",
+      });
+    }
 
-  return {
-    message: "Deleted successfully",
-  };
+    return {
+      message: "Deleted successfully",
+    };
   }
 );
 }

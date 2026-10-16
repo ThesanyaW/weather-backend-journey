@@ -31,3 +31,7 @@ export const FavoritesResponseSchema =
   Type.Array(
     FavoriteResponseSchema
   );
+
+export const FavoriteParamsSchema = Type.Object({
+  id: Type.String(),
+});
