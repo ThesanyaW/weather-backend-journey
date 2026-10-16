@@ -14,9 +14,12 @@ import {
 } from "./hooks/on-response.js";
 import favoritesRoutes
   from "./routes/favorites.routes.js";
+import errorHandlerPlugin
+  from "./plugins/error-handler.js";
 
 await app.register(corsPlugin);
 await app.register(swaggerPlugin);
+await app.register(errorHandlerPlugin);
 await registerOnRequestHook(app);
 await registerPreHandlerHook(app);
 await registerOnResponseHook(app);
